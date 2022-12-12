@@ -15,7 +15,7 @@
   register: postgres_data
 
 - name: "Initialize PostgreSQL"
-  shell: "postgresql-setup initdb"
+  ansible.builtin.shell: "postgresql-setup initdb"
   when: not postgres_data.stat.exists
 
 - name: "Start and enable services"
@@ -25,42 +25,42 @@
     enabled: true
 
 - name: "Create app database"
-  postgresql_db:
+  community.postgresql.postgresql_db:
     state: present
-    name: "{{ db_name }}"
+    name: "{{ DB_NAME }}"
   become: true
   become_user: postgres
 
 - name: "Create db user"
-  postgresql_user:
+  community.postgresql.postgresql_user:
     state: present
-    name: "{{ db_user }}"
-    password: "{{ db_password }}"
+    name: "{{ DB_USER }}"
+    password: "{{ DB_PASSWORD }}"
   become: true
   become_user: postgres
 
 - name: "Grant db user access to app db"
-  postgresql_privs:
+  community.postgresql.postgresql_privs:
     type: database
-    database: "{{ db_name }}"
-    roles: "{{ db_user }}"
+    database: "{{ DB_NAME }}"
+    roles: "{{ DB_USER }}"
     grant_option: no
     privs: all
   become: true
   become_user: postgres
 
 - name: "Allow password connection for the db user"
-  postgresql_pg_hba:
+  community.postgresql.postgresql_pg_hba:
     dest: "/var/lib/pgsql/data/pg_hba.conf"
     contype: host
     databases: all
     method: password
-    users: "{{ db_user }}"
+    users: "{{ DB_USER }}"
     create: true
   become: true
   become_user: postgres
 
 - name: "Restart PostgreSQL"
-  service:
+  ansible.builtin.service:
     name: postgresql
     state: restarted
