@@ -1,0 +1,41 @@
+---
+- name: "Deployment application"
+  hosts: "centos"
+  become: true
+  vars:
+    SECRET_KEY_BASE: verysecretkey
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: 1
+    DB_HOST: 127.0.0.1
+    DB_PORT: 5432
+    db_user: appuser
+    db_password: P@ssw0rd
+    db_name: appdb
+    app_name: xpaste_practicum 
+  
+  pre_tasks:
+  - name: "Install new ca-certificates package"
+    ansible.builtin.yum:
+      name: ca-certificates 
+      state: latest
+  
+  roles:
+    - geerlingguy.repo-epel
+    - geerlingguy.repo-remi
+    - psql
+    - nginxinc.nginx
+    - { role: rvm.ruby,
+        tags: ruby,
+        rvm1_rubies: ['ruby-2.4.2'],
+        rvm1_install_flags: '--auto-dotfiles',
+        rvm1_install_path: /usr/local/rvm,
+        rvm1_user: root,
+        rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
+      }
+    - deploy_app 
+ 
+  tasks:
+  - name: "Reload nginx service"
+    service:
+      name: nginx
+      state: reloaded
