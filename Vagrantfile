@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
       application.vm.box = "bento/centos-7.9"
       application.vm.hostname = "application"
       #application.vbguest.auto_update = true
-      application.vm.network "public_network", ip: "192.168.0.201"
+      application.vm.network "public_network", ip: "192.168.0.202"
       application.vm.provision "shell", inline: <<-SHELL
          cat /home/vagrant/.ssh/ansible.pub >> /home/vagrant/.ssh/authorized_keys
     SHELL
