@@ -1,3 +1,4 @@
 ./.vagrant/
 ansible/ssh-keys/ansible
 ansible/ssh-keys/ansible.pub
+*.log
