@@ -24,7 +24,7 @@
   roles:
     - geerlingguy.repo-epel
     - geerlingguy.repo-remi
-    - psql
+    - postgresql
     - nginxinc.nginx
     - { role: rvm.ruby,
         tags: ruby,

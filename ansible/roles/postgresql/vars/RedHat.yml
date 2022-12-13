@@ -1,0 +1,6 @@
+---
+postgres_packages:
+  - postgresql
+  - postgresql-server
+  - python-psycopg2
+  - python-ipaddress
