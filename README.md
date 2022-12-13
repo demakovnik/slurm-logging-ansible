@@ -13,8 +13,9 @@
 ```sh
    vagrant ssh controlnode
 ```
-4. На controlnode переходим в папку /home/vagrant/ansible и запускаем плейбук:
+4. На controlnode переходим в папку /home/vagrant/ansible, устанавливаем требуемые коллекции и роли и запускаем плейбук:
 ```sh
+   ansible-galaxy install -r requirements.yml
    ansible-playbook playbook.yml
 ```
 5. После успешного завершения работы плейбука открываем веб-браузер и переходим по ссылке:
