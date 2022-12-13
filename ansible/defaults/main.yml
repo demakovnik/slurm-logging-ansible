@@ -9,3 +9,5 @@ DB_PORT: 5432
 DB_USER: 'dbuser'
 DB_PASSWORD: 'dbpassword'
 DB_NAME: 'application'
+GIT_REPO: git@gitlab.slurm.io:edu/xpaste_practicum.git
+GIT_SSH_KEY: /root/.ssh/ansible
