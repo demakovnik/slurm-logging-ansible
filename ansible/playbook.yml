@@ -1,22 +1,12 @@
 ---
 - name: "Deployment application"
-  
-  vars:
-    application_name: 'application'
-    ruby_package: 'ruby-2.4.2'
-    SECRET_KEY_BASE: 'secretkey'
-    RAILS_ENV: 'production'
-    RAILS_LOG_TO_STDOUT: 1
-    DB_HOST: 127.0.0.1
-    DB_PORT: 5432
-    DB_USER: 'dbuser'
-    DB_PASSWORD: 'dbpassword'
-    DB_NAME: 'application'
-
-
+    
   hosts: "application_host"
   become: true
-   
+
+  vars_files:
+    - 'defaults/main.yml'
+
   pre_tasks:
   - name: "Install new ca-certificates package"
     ansible.builtin.yum:
