@@ -1,6 +1,6 @@
 ---
 application_name: 'application'
-ruby_package: 'ruby-2.4.2'
+ruby_package: 'ruby-2.7.2'
 SECRET_KEY_BASE: 'secretkey'
 RAILS_ENV: 'production'
 RAILS_LOG_TO_STDOUT: 1
