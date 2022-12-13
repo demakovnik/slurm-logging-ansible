@@ -20,7 +20,8 @@ Vagrant.configure("2") do |config|
     end
     controlnode.vm.box = "bento/ubuntu-22.04"
     controlnode.vm.hostname = "controlnode"
-    application.vbguest.auto_update = true
+    controlnode.vm.synced_folder "./ansible","/home/vagrant/ansible"
+    controlnode.vbguest.auto_update = true
     controlnode.vm.network "public_network", ip: "192.168.0.201"
     controlnode.vm.provision "shell", inline: <<-SHELL
        cat /home/vagrant/.ssh/ansible.pub >> /home/vagrant/.ssh/authorized_keys
@@ -40,7 +41,7 @@ Vagrant.configure("2") do |config|
       end
       application.vm.box = "bento/centos-7.9"
       application.vm.hostname = "application"
-      #application.vbguest.auto_update = true
+      application.vbguest.auto_update = true
       application.vm.network "public_network", ip: "192.168.0.202"
       application.vm.provision "shell", inline: <<-SHELL
          cat /home/vagrant/.ssh/ansible.pub >> /home/vagrant/.ssh/authorized_keys
