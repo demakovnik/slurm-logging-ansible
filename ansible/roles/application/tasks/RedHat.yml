@@ -1,14 +1,7 @@
 ---
 - name: "Install app dependencies"
   ansible.builtin.yum: 
-    name: 
-      - "@development-tools"
-      - libxml2-devel
-      - libxslt-devel
-      - git
-      - postgresql-devel
-      - nodejs
-      - ruby-devel
+    name: '{{ app_dependencies }}'
     state: latest 
     update_cache: yes
 

@@ -2,7 +2,8 @@
 - name: "Deployment application"
   
   vars:
-    application_name: 'my_application'
+    application_name: 'application'
+    ruby_package: 'ruby-2.4.2'
     SECRET_KEY_BASE: 'secretkey'
     RAILS_ENV: 'production'
     RAILS_LOG_TO_STDOUT: 1
@@ -11,6 +12,7 @@
     DB_USER: 'dbuser'
     DB_PASSWORD: 'dbpassword'
     DB_NAME: 'application'
+
 
   hosts: "application_host"
   become: true
@@ -28,13 +30,13 @@
     - nginxinc.nginx
     - { role: rvm.ruby,
         tags: ruby,
-        rvm1_rubies: ['ruby-2.4.2'],
+        rvm1_rubies: ['{{ ruby_package }}'],
         rvm1_install_flags: '--auto-dotfiles',
         rvm1_install_path: /usr/local/rvm,
         rvm1_user: root,
         rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
       }
-    - deploy_app 
+    - application 
  
   tasks:
   - name: "Reload nginx service"

@@ -1,0 +1,9 @@
+---
+application_dependencies:
+  - "@development-tools"
+  - libxml2-devel
+  - libxslt-devel
+  - git
+  - postgresql-devel
+  - nodejs
+  - ruby-devel
