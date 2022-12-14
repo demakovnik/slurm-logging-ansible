@@ -1,6 +1,44 @@
+---
+# tasks file for postgres
+
 - name: "Include OS-specific variables"
   include_vars: "{{ ansible_os_family }}.yml"
   
-- name: "Include postgresql tasks"
+- name: "Install the correct dependencies"
   include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: "Restart PostgreSQL"
+  ansible.builtin.service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: 'Create a new database with name "{{ DB_NAME }}"'
+  become_user: 'postgres'
+  community.postgresql.postgresql_db:
+    name: '{{ DB_NAME }}'
+
+- name: 'Connect to "{{ DB_NAME }}" database, create user "{{ DB_USER }}" and grant all access to database'
+  become_user: 'postgres'
+  community.postgresql.postgresql_user:
+    db: '{{ DB_NAME }}'
+    name: '{{ DB_USER }}'
+    password: '{{ DB_PASSWORD }}'
+    priv: "ALL"
+
+- name: "Allow password connection for the db user"
+  community.postgresql.postgresql_pg_hba:
+    dest: "/var/lib/pgsql/data/pg_hba.conf"
+    contype: host
+    databases: all
+    method: password
+    users: "{{ DB_USER }}"
+    create: true
+  become: true
+  become_user: postgres
+
+- name: "Restart PostgreSQL"
+  ansible.builtin.service:
+    name: postgresql
+    state: restarted
 

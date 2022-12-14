@@ -1,64 +1,25 @@
----
 
-- name: "Install PostgreSQL yum"
+# Install PostgreSQL:
+- name: 'Install PostgreSQL:'
+  become: true
   ansible.builtin.yum:
-    name: "{{ postgres_packages }}"
-    update_cache: yes
-    state: latest
-  
+    name: '{{ postgres_dependencies }}'
+    state: 'present'  
 
-- name: "Find out if PostgreSQL is initialized"
-  ansible.builtin.stat:
-    path: "/var/lib/pgsql/data/pg_hba.conf"
-  register: postgres_data
-
-- name: "Initialize PostgreSQL"
-  ansible.builtin.shell: "postgresql-setup initdb"
-  when: not postgres_data.stat.exists
-
-- name: "Start and enable services"
-  service:
-    name: postgresql
-    state: started
-    enabled: true
-
-- name: "Create app database"
-  community.postgresql.postgresql_db:
-    state: present
-    name: "{{ DB_NAME }}"
+- name: 'Check if folder is empty'
   become: true
-  become_user: postgres
+  ansible.builtin.find:
+      paths: '/var/lib/pgsql/data/'
+      file_type: directory
+      hidden: true
+      recurse: true
+  register: find_out
 
-- name: "Create db user"
-  community.postgresql.postgresql_user:
-    state: present
-    name: "{{ DB_USER }}"
-    password: "{{ DB_PASSWORD }}"
-  become: true
+- name: 'Optionally initialize the database:'
   become_user: postgres
-
-- name: "Grant db user access to app db"
-  community.postgresql.postgresql_privs:
-    type: database
-    database: "{{ DB_NAME }}"
-    roles: "{{ DB_USER }}"
-    grant_option: no
-    privs: all
-  become: true
-  become_user: postgres
-
-- name: "Allow password connection for the db user"
-  community.postgresql.postgresql_pg_hba:
-    dest: "/var/lib/pgsql/data/pg_hba.conf"
-    contype: host
-    databases: all
-    method: password
-    users: "{{ DB_USER }}"
-    create: true
-  become: true
-  become_user: postgres
-
-- name: "Restart PostgreSQL"
-  ansible.builtin.service:
-    name: postgresql
-    state: restarted
+  ansible.builtin.shell:
+    cmd: '{{ item }}'
+  with_items: 
+    - 'postgresql-setup initdb'
+  when: 
+    - 'find_out.matched == 0'

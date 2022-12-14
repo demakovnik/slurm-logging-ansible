@@ -1,5 +1,7 @@
 ---
-postgres_packages:
+POSTGRES_DATA_LOCATION: /var/lib/pgsql/{{ POSTGRES_VERSION }}/data
+
+postgres_dependencies:
   - postgresql
   - postgresql-server
   - python-psycopg2
