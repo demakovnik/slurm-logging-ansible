@@ -1,6 +1,9 @@
 ---
+
 - name: install monitoring stack
   hosts: monitoring
+  vars_files:
+    - defaults/main.yml
   become: true
   roles:
     - prometheus
@@ -9,6 +12,8 @@
 
 - name: install node-exporter
   hosts: monitoring_agents
+  vars_files:
+    - defaults/main.yml
   become: true
   roles:
     - node-exporter

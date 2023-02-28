@@ -1,13 +1,7 @@
 ---
-application_name: 'application'
-ruby_package: 'ruby-2.5.2'
-SECRET_KEY_BASE: 'secretkey'
-RAILS_ENV: 'production'
-RAILS_LOG_TO_STDOUT: 1
-DB_HOST: 127.0.0.1
-DB_PORT: 5432
-DB_USER: 'dbuser'
-DB_PASSWORD: 'dbpassword'
-DB_NAME: 'application'
-GIT_REPO: git@gitlab.slurm.io:edu/xpaste_practicum.git
-GIT_SSH_KEY: /root/.ssh/ansible
+elasticsearch_network_host: localhost
+elasticsearch_http_port: 9200
+es_api_basic_auth_username: elastic
+es_api_basic_auth_password: password
+kibana_host_ip: 192.168.0.202
+kibana_host_port: 5601

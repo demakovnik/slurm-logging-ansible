@@ -9,7 +9,7 @@
   ansible.builtin.apt:
     name: elasticsearch
     update_cache: yes
-  notify: reload_daemon_and_restart_elasticsearch
+  
 - name: copy elastic configuration
   ansible.builtin.template:
     src: elasticsearch.yml.j2
@@ -17,6 +17,7 @@
     owner: elasticsearch
     group: elasticsearch
     mode: 0660
+  notify: reload_daemon_and_restart_elasticsearch
 - meta: flush_handlers
 - name: service always started
   ansible.builtin.systemd:

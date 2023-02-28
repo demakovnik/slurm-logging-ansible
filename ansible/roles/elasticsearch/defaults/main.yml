@@ -1,4 +1,0 @@
-elasticsearch_network_host: localhost
-elasticsearch_http_port: 9200
-es_api_basic_auth_username: elastic
-es_api_basic_auth_password: password
