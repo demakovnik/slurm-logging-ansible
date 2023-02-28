@@ -1,6 +1,6 @@
 # Шаги установки
 
-1. Переходим в папку  ansible/ssh-keys и запускаем генерацию ssh-ключей (после генерации ключей нужно добавить ключ anisble.pub на [git-репозиторий Слёрм](https://gitlab.slurm.io/edu/xpaste_practicum)):
+1. Переходим в папку  ansible/ssh-keys и запускаем генерацию ssh-ключей:
 ```sh
    cd ssh-keys
    ssh-keygen -f ansible
@@ -13,9 +13,8 @@
 ```sh
    vagrant ssh controlnode
 ```
-4. На controlnode переходим в папку /home/vagrant/ansible, устанавливаем требуемые коллекции и роли и запускаем плейбук:
+4. На controlnode переходим в папку /home/vagrant/ansible и запускаем плейбук:
 ```sh
-   ansible-galaxy install -r requirements.yml
    ansible-playbook playbook.yml
 ```
 5. После успешного завершения работы плейбука открываем веб-браузер и переходим по ссылке:

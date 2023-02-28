@@ -1,13 +1,16 @@
 ---
-
 # tasks file for node-exporter
+
+- name: "Include OS-specific variables"
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: check if node exporter exist
   stat:
     path: "{{ node_exporter_bin }}"
   register: __check_node_exporter_present
 - name: check if node exporter file with startup keys exist
   stat:
-    path: "{{ node_exporter_keys }}"
+    path: "{{ environment_directory }}/{{ environment_file }}"
   register: __check_node_exporter_keys_present
 - name: create node exporter user
   user:
@@ -30,7 +33,7 @@
   
 - name: download and unzip node exporter if not exist
   unarchive:
-    src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    src: "{{ node_exporter_install_archive_file_link }}"
     dest: /tmp/
     remote_src: yes
     validate_certs: no
@@ -47,10 +50,11 @@
   file:
     path: /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/
     state: absent
+
 - name: install node_exporter keys file
   ansible.builtin.template:
     src: node_exporter.j2
-    dest: "{{ node_exporter_keys }}"
+    dest: "{{ environment_directory }}/{{ environment_file }}"
     owner: root
     group: root
     mode: 0660
