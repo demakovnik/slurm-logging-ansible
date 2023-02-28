@@ -8,7 +8,7 @@
     - kibana
 
 - name: install node-exporter
-  hosts: all
+  hosts: monitoring_agents
   become: true
   roles:
     - node-exporter
