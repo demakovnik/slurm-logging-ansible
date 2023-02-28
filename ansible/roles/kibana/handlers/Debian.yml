@@ -1,8 +1,0 @@
----
-# handlers file for kibana
-- name: reload_daemon_and_restart_kibana
-  ansible.builtin.systemd:
-    name: kibana
-    state: restarted
-    daemon_reload: yes
-    enabled: yes

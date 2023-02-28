@@ -14,8 +14,8 @@
   ansible.builtin.template:
     src: elasticsearch.yml.j2
     dest: "/etc/elasticsearch/elasticsearch.yml"
-    owner: root
-    group: root
+    owner: elasticsearch
+    group: elasticsearch
     mode: 0660
 - meta: flush_handlers
 - name: service always started

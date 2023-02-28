@@ -58,6 +58,14 @@
   file:
     path: /tmp/prometheus-{{ prometheus_version }}.linux-amd64/
     state: absent
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/sysconfig/
+    state: directory
+    mode: '0755'
+    owner: root
+    
 - name: install prometheus keys file
   ansible.builtin.template:
     src: prometheus.j2
