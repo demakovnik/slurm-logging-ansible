@@ -1,35 +1,15 @@
 ---
-- name: "Deployment application"
-    
-  hosts: "application_host"
+- name: install monitoring stack
+  hosts: monitoring
   become: true
-
-  vars_files:
-    - 'defaults/main.yml'
-
-  pre_tasks:
-  - name: "Install new ca-certificates package"
-    ansible.builtin.yum:
-      name: ca-certificates 
-      state: latest
-  
   roles:
-    - geerlingguy.repo-epel
-    - geerlingguy.repo-remi
-    - postgresql
-    - nginxinc.nginx
-    - { role: rvm.ruby,
-        tags: ruby,
-        rvm1_rubies: ['{{ ruby_package }}'],
-        rvm1_install_flags: '--auto-dotfiles',
-        rvm1_install_path: /usr/local/rvm,
-        rvm1_user: root,
-        rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
-      }
-    - application 
- 
-  tasks:
-  - name: "Reload nginx service"
-    service:
-      name: nginx
-      state: reloaded
+    - prometheus
+    - elasticsearch
+    - kibana
+
+- name: install node-exporter
+  hosts: all
+  become: true
+  roles:
+    - node-exporter
+    - fluentbit

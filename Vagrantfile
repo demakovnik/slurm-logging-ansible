@@ -30,18 +30,18 @@ Vagrant.configure("2") do |config|
   SHELL
   end
   
-    config.vm.define "application" do |application|
-        application.vm.provider "virtualbox" do |vb|
+    config.vm.define "monitoring" do |monitoring|
+      monitoring.vm.provider "virtualbox" do |vb|
         # Display the VirtualBox GUI when booting the machine
         vb.gui = false
         # Customize the amount of memory on the VM:
         vb.memory = "4096"
         vb.cpus = 1
       end
-      application.vm.box = "bento/centos-7.9"
-      application.vm.hostname = "application"
-      application.vm.network "public_network", ip: "192.168.0.202"
-      application.vm.provision "shell", inline: <<-SHELL
+      monitoring.vm.box = "bento/ubuntu-22.04"
+      monitoring.vm.hostname = "monitoring"
+      monitoring.vm.network "public_network", ip: "192.168.0.202"
+      monitoring.vm.provision "shell", inline: <<-SHELL
          cat /home/vagrant/.ssh/ansible.pub >> /home/vagrant/.ssh/authorized_keys
     SHELL
     end

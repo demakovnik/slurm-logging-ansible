@@ -1,0 +1,14 @@
+---
+- name: "Include OS-specific variables"
+  include_vars: "{{ ansible_os_family }}.yml"
+  
+- name: "Install the correct dependencies"
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Make sure Elasticsearch is running before proceeding.
+  wait_for:
+    host: "{{ elasticsearch_network_host }}"
+    port: "{{ elasticsearch_http_port }}"
+    delay: 3
+    timeout: 300
+

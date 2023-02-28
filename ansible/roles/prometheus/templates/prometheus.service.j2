@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus Service Version {{ prometheus_version }}
+Documentation=https://github.com/prometheus/prometheus
+[Service]
+Restart=always
+User={{ prometheus_user }}
+Group={{ prometheus_user }}
+EnvironmentFile={{ prometheus_keys }}
+ExecStart={{ prometheus_bin }} $OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+[Install]
+WantedBy=multi-user.target
