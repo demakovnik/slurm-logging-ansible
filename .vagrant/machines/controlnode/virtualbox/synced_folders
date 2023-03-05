@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/ansible":{"guestpath":"/home/vagrant/ansible","hostpath":"/mnt/Multimedia/Education/Slurm/kubernetes_logs/practice/slurm-logging-ansible/ansible","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/mnt/Multimedia/Education/Slurm/kubernetes_logs/practice/slurm-logging-ansible","disabled":false,"__vagrantfile":true}}}
